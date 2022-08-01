@@ -1,5 +1,4 @@
 {
-  "private": true,
   "displayName": "Prusa Link",
   "name": "homebridge-prusa-link",
   "version": "1.0.0",
