@@ -1,11 +1,7 @@
 import { API } from 'homebridge';
 
-import { PLATFORM_NAME } from './settings';
-import { ExampleHomebridgePlatform } from './platform';
+import { PrusaLinkAccessory } from './prusaLinkAccessory';
 
-/**
- * This method registers the platform with Homebridge
- */
 export = (api: API) => {
-  api.registerPlatform(PLATFORM_NAME, ExampleHomebridgePlatform);
+  api.registerAccessory('homebridge-prusa-link', 'PrusaLinkDevice', PrusaLinkAccessory);
 };

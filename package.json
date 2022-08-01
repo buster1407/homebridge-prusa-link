@@ -3,7 +3,7 @@
   "displayName": "Prusa Link",
   "name": "homebridge-prusa-link",
   "version": "1.0.0",
-  "description": "A short description about what your plugin does.",
+  "description": "An homebridge plugin for Prusa Link",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -24,11 +24,16 @@
     "prepublishOnly": "npm run lint && npm run build"
   },
   "keywords": [
-    "homebridge-plugin"
+    "homebridge-plugin",
+    "prusa",
+    "link"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "node-fetch": "^2.6.7"
+  },
   "devDependencies": {
     "@types/node": "^16.10.9",
+    "@types/node-fetch": "^2.6.2",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
     "eslint": "^8.0.1",

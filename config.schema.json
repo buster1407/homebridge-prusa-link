@@ -1,7 +1,7 @@
 {
-  "pluginAlias": "ExampleHomebridgePlugin",
-  "pluginType": "platform",
-  "singular": true,
+  "pluginAlias": "PrusaLinkDevice",
+  "pluginType": "accessory",
+  "singular": false,
   "schema": {
     "type": "object",
     "properties": {
@@ -9,7 +9,29 @@
         "title": "Name",
         "type": "string",
         "required": true,
-        "default": "Example Dynamic Platform"
+        "default": "Prusa Link"
+      },
+      "ip": {
+        "title": "IP-Address",
+        "type": "string",
+        "required": true
+      },
+      "apikey": {
+        "title": "API-Key",
+        "type": "string",
+        "required": true
+      },
+      "manufacturer": {
+        "title": "Manufacturer",
+        "type": "string",
+        "required": true,
+        "default": "Prusa"
+      },
+      "model": {
+        "title": "Model",
+        "type": "string",
+        "required": true,
+        "default": "Printer"
       }
     }
   }
