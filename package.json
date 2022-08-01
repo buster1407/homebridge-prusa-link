@@ -1,5 +1,5 @@
 {
-  "displayName": "Prusa Link",
+  "displayName": "Homebridge Prusa Link",
   "name": "homebridge-prusa-link",
   "version": "1.0.0",
   "description": "An homebridge plugin for Prusa Link",
