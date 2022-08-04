@@ -8,8 +8,9 @@ export class PrusaLinkAccessory {
 
   private readonly motionSensorService: Service;
   private readonly informationService: Service;
+  private readonly batteryService: Service;
 
-  private lastState: PrinterStates = PrinterStates.OPERATIONAL;
+  private lastState: PrinterStates = PrinterStates.OFFLINE;
 
   constructor(
     private readonly log: Logger,
@@ -17,6 +18,8 @@ export class PrusaLinkAccessory {
     private readonly api: API) {
 
     this.motionSensorService = new this.api.hap.Service.MotionSensor();
+
+    this.batteryService = new this.api.hap.Service.Battery();
 
     this.informationService = new this.api.hap.Service.AccessoryInformation();
     this.informationService
@@ -29,8 +32,9 @@ export class PrusaLinkAccessory {
     }, 10000);
   }
 
-  async refreshState() {
-    let motion = false;
+  private async refreshState() {
+    let state = PrinterStates.OFFLINE;
+    let completion = 1;
 
     try {
       const response = await fetch(this.baseURL + Paths.JobPath, {
@@ -40,25 +44,38 @@ export class PrusaLinkAccessory {
         },
       });
       const body = await response.json();
-      const state = body.state;
-      this.log.debug(`${this.config.name} is ${state}`);
-
-      if (this.lastState === PrinterStates.PRINTING && state === PrinterStates.OPERATIONAL) {
-        motion = true;
-        this.log.info(`${this.config.name} finished printing!`);
-      }
-
-      this.lastState = state;
+      state = body.state;
+      completion = body.progress?.completion;
 
     } catch (e) {
       this.log.debug(`Cannot reach ${this.config.name}`);
     }
+
+    this.updateMotionDetected(state);
+    this.updateBatteryLevel(completion);
+  }
+
+  private updateMotionDetected(state: PrinterStates) {
+    let motion = false;
+
+    if(this.lastState === PrinterStates.PRINTING && state === PrinterStates.OPERATIONAL) {
+      motion = true;
+      this.log.info(`${this.config.name} finished printing!`);
+    }
+
+    this.lastState = state;
     this.motionSensorService.updateCharacteristic(this.api.hap.Characteristic.MotionDetected, motion);
   }
 
-  getServices(): Service[] {
+  private updateBatteryLevel(completion: number) {
+    const completionInPercent = completion ? Math.round(completion * 100) : 100;
+    this.batteryService.updateCharacteristic(this.api.hap.Characteristic.BatteryLevel, completionInPercent);
+  }
+
+  public getServices(): Service[] {
     return [
       this.motionSensorService,
+      this.batteryService,
       this.informationService,
     ];
   }

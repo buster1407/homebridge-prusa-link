@@ -7,5 +7,6 @@ export class Paths {
 export enum PrinterStates {
   OPERATIONAL = 'Operational',
   PRINTING = 'Printing',
-  PAUSED = 'Paused'
+  PAUSED = 'Paused',
+  OFFLINE = 'Offline' // Custom state
 }
