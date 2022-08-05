@@ -45,10 +45,10 @@ export class PrusaLinkAccessory {
       });
       const body = await response.json();
       state = body.state;
-      completion = body.progress?.completion;
+      completion = body.progress?.completion ?? 1;
 
     } catch (e) {
-      this.log.debug(`Cannot reach ${this.config.name}`);
+      // do nothing -> standard values will be set
     }
 
     this.updateMotionDetected(state);
@@ -65,11 +65,15 @@ export class PrusaLinkAccessory {
 
     this.lastState = state;
     this.motionSensorService.updateCharacteristic(this.api.hap.Characteristic.MotionDetected, motion);
+
+    this.log.debug(`${this.config.name} is ${state}`);
   }
 
   private updateBatteryLevel(completion: number) {
-    const completionInPercent = completion ? Math.round(completion * 100) : 100;
+    const completionInPercent = Math.round(completion * 100);
     this.batteryService.updateCharacteristic(this.api.hap.Characteristic.BatteryLevel, completionInPercent);
+
+    this.log.debug(`${this.config.name} Progress: ${completionInPercent}`);
   }
 
   public getServices(): Service[] {
