@@ -1,7 +1,44 @@
+![npm](https://img.shields.io/npm/v/homebridge-prusa-link)
+![npm](https://img.shields.io/npm/dt/homebridge-prusa-link)
+
 # homebridge-prusa-link
 
 ## Homebridge plugin for Prusa Link
 
-This [Homebridge](https://github.com/homebridge/homebridge) plugin currently creates an motion sensor which will be triggered when the printer finishes a print. Also the sensor features a battery level which shows the current print progress in percent.
+This [Homebridge](https://github.com/homebridge/homebridge) plugin allows you to monitor your 3D printer connected via Prusa Link directly from HomeKit.
 
-I myself use this to get a notification on my iPhone when my printer is ready.
+### Features
+* Motion sensor: Triggered when printer finishes.
+* Battery state: Shows current print progress in percent.
+
+![image](https://user-images.githubusercontent.com/52078523/183643597-d88ae5ba-5a06-4d70-9f89-fadc638ef1a7.png)
+
+## Installation
+
+If you are new to homebridge, please read the [documentation](https://github.com/homebridge/homebridge) first to set up your own server.
+
+Install homebridge-prusa-link:
+```sh
+sudo npm install -g homebridge-prusa-link
+```
+
+## Configuration
+
+For each printer you want to monitor add a `PrusaLinkDevice` accessory in your homebridge configuration file `config.json`.
+
+Set the required configuration values as follows:
+* accessory: "PrusaLinkDevice"
+* name: How the printer should be named in your Home App
+* ip: The IP adress under which Prusa Link can be reached
+* apikey: The API key you need to be able to access Prusa Link
+
+### Example
+```sh
+"accessories": [
+{
+  "accessory": "PrusaLinkDevice",
+  "name": "Prusa Mini",
+  "ip": "192.168.1.25",
+  "apikey": "abcdefg12345678"
+}
+```
