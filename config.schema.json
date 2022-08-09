@@ -7,32 +7,57 @@
     "properties": {
       "name": {
         "title": "Name",
+        "description": "The name of your printer",
         "type": "string",
         "required": true,
         "default": "Prusa Link"
       },
       "ip": {
         "title": "IP-Address",
+        "description": "The ip address of your printer",
         "type": "string",
         "required": true
       },
       "apikey": {
         "title": "API-Key",
+        "description": "The API key of your printer",
         "type": "string",
         "required": true
       },
       "manufacturer": {
         "title": "Manufacturer",
+        "description": "The manufacturer of your printer (probably Prusa)",
         "type": "string",
-        "required": true,
         "default": "Prusa"
+      },
+      "serialnumber": {
+        "title": "Serial Number",
+        "description": "The serial number of your printer",
+        "type": "string",
+        "default": ""
       },
       "model": {
         "title": "Model",
+        "description": "The name of your printer model",
         "type": "string",
-        "required": true,
         "default": "Printer"
       }
     }
-  }
+  },
+  "layout": [
+    { "key": "name" },
+    { "key": "ip" },
+    { "key": "apikey" },
+    { "title": "Device Informations",
+      "description": "Additional device informations for display only",
+      "type": "fieldset", 
+      "expandable": true,
+      "expanded": false,
+      "items": [ 
+        "manufacturer", 
+        "serialnumber", 
+        "model"
+      ]
+    }
+  ]
 }

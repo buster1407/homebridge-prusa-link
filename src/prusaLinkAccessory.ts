@@ -24,6 +24,7 @@ export class PrusaLinkAccessory {
     this.informationService = new this.api.hap.Service.AccessoryInformation();
     this.informationService
       .setCharacteristic(api.hap.Characteristic.Manufacturer, this.config.manufacturer)
+      .setCharacteristic(api.hap.Characteristic.SerialNumber, this.config.serialnumber)
       .setCharacteristic(api.hap.Characteristic.Model, this.config.model);
 
     // Refresh state every 10 seconds
