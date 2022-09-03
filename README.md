@@ -1,3 +1,4 @@
+[![verified-by-homebridge](https://badgen.net/badge/homebridge/verified/purple)](https://github.com/homebridge/homebridge/wiki/Verified-Plugins)
 ![npm](https://img.shields.io/npm/v/homebridge-prusa-link)
 ![npm](https://img.shields.io/npm/dt/homebridge-prusa-link)
 
