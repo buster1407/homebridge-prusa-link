@@ -1,16 +1,14 @@
 import { AccessoryConfig, API, Logger, Service } from 'homebridge';
-import fetch from 'node-fetch';
+import httpClient, { RequestOptions } from 'urllib';
 import { Paths, PrinterStates } from './values';
 
 export class PrusaLinkAccessory {
 
-  private readonly baseURL = Paths.Http + this.config.ip;
+  private readonly statusUrl = Paths.Http + this.config.ip + Paths.StatusPath;
 
   private readonly motionSensorService: Service;
   private readonly informationService: Service;
   private readonly batteryService: Service;
-
-  private lastState: PrinterStates = PrinterStates.OFFLINE;
 
   constructor(
     private readonly log: Logger,
@@ -38,16 +36,13 @@ export class PrusaLinkAccessory {
     let completion = 1;
 
     try {
-      const response = await fetch(this.baseURL + Paths.JobPath, {
-        method: 'GET',
-        headers: {
-          'X-Api-Key': this.config.apikey,
-        },
-      });
-      const body = await response.json();
-      state = body.state;
-      completion = body.progress?.completion ?? 1;
-
+      const options: RequestOptions = {
+        digestAuth: `${this.config.user}:${this.config.password}`,
+      };
+      const response = await httpClient.request(this.statusUrl, options);
+      const body = JSON.parse(response.data);
+      state = body.printer.state;
+      completion = body.job?.progress ?? 1;
     } catch (e) {
       // do nothing -> standard values will be set
     }
@@ -59,12 +54,11 @@ export class PrusaLinkAccessory {
   private updateMotionDetected(state: PrinterStates) {
     let motion = false;
 
-    if(this.lastState === PrinterStates.PRINTING && state === PrinterStates.OPERATIONAL) {
+    if (state === PrinterStates.FINISHED) {
       motion = true;
       this.log.info(`${this.config.name} finished printing!`);
     }
 
-    this.lastState = state;
     this.motionSensorService.updateCharacteristic(this.api.hap.Characteristic.MotionDetected, motion);
 
     this.log.debug(`${this.config.name} is ${state}`);

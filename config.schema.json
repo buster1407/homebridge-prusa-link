@@ -18,9 +18,16 @@
         "type": "string",
         "required": true
       },
-      "apikey": {
-        "title": "API-Key",
-        "description": "The API key of your printer",
+      "user": {
+        "title": "User",
+        "description": "The PrusaLink username of your printer",
+        "type": "string",
+        "required": true,
+        "default": "maker"
+      },
+      "password": {
+        "title": "Password",
+        "description": "The PrusaLink password of your printer",
         "type": "string",
         "required": true
       },
@@ -45,17 +52,27 @@
     }
   },
   "layout": [
-    { "key": "name" },
-    { "key": "ip" },
-    { "key": "apikey" },
-    { "title": "Device Informations",
+    {
+      "key": "name"
+    },
+    {
+      "key": "ip"
+    },
+    {
+      "key": "user"
+    },
+    {
+      "key": "password"
+    },
+    {
+      "title": "Device Informations",
       "description": "Additional device informations for display only",
-      "type": "fieldset", 
+      "type": "fieldset",
       "expandable": true,
       "expanded": false,
-      "items": [ 
-        "manufacturer", 
-        "serialnumber", 
+      "items": [
+        "manufacturer",
+        "serialnumber",
         "model"
       ]
     }
