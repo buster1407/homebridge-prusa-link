@@ -31,7 +31,8 @@ Set the required configuration values as follows:
 * accessory: "PrusaLinkDevice"
 * name: How the printer should be named in your Home App
 * ip: The IP adress under which Prusa Link can be reached
-* apikey: The API key you need to be able to access Prusa Link
+* user: The username used to connect to  Prusa Link
+* password: The password used to connect to  Prusa Link
 
 ### Example
 ```sh
@@ -40,6 +41,7 @@ Set the required configuration values as follows:
   "accessory": "PrusaLinkDevice",
   "name": "Prusa Mini",
   "ip": "192.168.1.25",
-  "apikey": "abcdefg12345678"
+  "user": "maker",
+  "password": "password123"
 }
 ```

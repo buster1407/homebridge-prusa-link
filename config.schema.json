@@ -20,14 +20,14 @@
       },
       "user": {
         "title": "User",
-        "description": "The PrusaLink username of your printer",
+        "description": "The Prusa Link username of your printer",
         "type": "string",
         "required": true,
         "default": "maker"
       },
       "password": {
         "title": "Password",
-        "description": "The PrusaLink password of your printer",
+        "description": "The Prusa Link password of your printer",
         "type": "string",
         "required": true
       },
