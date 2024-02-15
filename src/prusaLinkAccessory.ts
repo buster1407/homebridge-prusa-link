@@ -65,10 +65,9 @@ export class PrusaLinkAccessory {
   }
 
   private updateBatteryLevel(completion: number) {
-    const completionInPercent = Math.round(completion * 100);
-    this.batteryService.updateCharacteristic(this.api.hap.Characteristic.BatteryLevel, completionInPercent);
+    this.batteryService.updateCharacteristic(this.api.hap.Characteristic.BatteryLevel, completion);
 
-    this.log.debug(`${this.config.name} Progress: ${completionInPercent}`);
+    this.log.debug(`${this.config.name} Progress: ${completion}`);
   }
 
   public getServices(): Service[] {
