@@ -4,10 +4,10 @@ export class Paths {
 }
 
 export enum PrinterStates {
-  IDLE = 'Idle',
-  PRINTING = 'Printing',
-  PAUSED = 'Paused',
-  STOPPED = 'Stopped',
-  FINISHED = 'Finished',
-  OFFLINE = 'Offline' // Custom state
+  IDLE = 'IDLE',
+  PRINTING = 'PRINTING',
+  PAUSED = 'PAUSED',
+  STOPPED = 'STOPPED',
+  FINISHED = 'FINISHED',
+  OFFLINE = 'OFFLINE' // Custom state
 }
