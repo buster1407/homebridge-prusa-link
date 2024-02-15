@@ -42,7 +42,7 @@ export class PrusaLinkAccessory {
       const response = await httpClient.request(this.statusUrl, options);
       const body = JSON.parse(response.data);
       state = body.printer.state;
-      completion = body.job?.progress ?? 1;
+      completion = body.job?.progress ?? 100;
     } catch (e) {
       // do nothing -> standard values will be set
     }
@@ -56,7 +56,6 @@ export class PrusaLinkAccessory {
 
     if (state === PrinterStates.FINISHED) {
       motion = true;
-      this.log.info(`${this.config.name} finished printing!`);
     }
 
     this.motionSensorService.updateCharacteristic(this.api.hap.Characteristic.MotionDetected, motion);
