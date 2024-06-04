@@ -31,6 +31,27 @@
         "type": "string",
         "required": true
       },
+      "sensorMode": {
+        "title": "Sensor Mode",
+        "description": "The kind of sensor you want to expose",
+        "type": "string",
+        "default": "motion",
+        "oneOf": [
+          {
+            "title": "Motion Sensor",
+            "enum": [
+              "motion"
+            ]
+          },
+          {
+            "title": "Occupancy Sensor",
+            "enum": [
+              "occupancy"
+            ]
+          }
+        ],
+        "required": true
+      },
       "manufacturer": {
         "title": "Manufacturer",
         "description": "The manufacturer of your printer (probably Prusa)",
@@ -63,6 +84,9 @@
     },
     {
       "key": "password"
+    },
+    {
+      "key": "sensorMode"
     },
     {
       "title": "Device Informations",

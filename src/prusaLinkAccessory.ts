@@ -1,12 +1,13 @@
 import { AccessoryConfig, API, Logger, Service } from 'homebridge';
 import httpClient, { RequestOptions } from 'urllib';
-import { Paths, PrinterStates } from './values.js';
+import { Paths, PrinterStates, SensorModes } from './values.js';
 
 export class PrusaLinkAccessory {
 
   private readonly statusUrl;
+  private readonly sensorMode: SensorModes;
 
-  private readonly motionSensorService: Service;
+  private readonly sensorService: Service;
   private readonly informationService: Service;
   private readonly batteryService: Service;
 
@@ -17,7 +18,17 @@ export class PrusaLinkAccessory {
 
     this.statusUrl = Paths.Http + this.config.ip + Paths.StatusPath;
 
-    this.motionSensorService = new this.api.hap.Service.MotionSensor();
+    switch (this.config.sensorMode) {
+      case SensorModes.OCCUPANCY:
+        this.sensorMode = SensorModes.OCCUPANCY;
+        this.sensorService = new this.api.hap.Service.OccupancySensor();
+        break;
+      case SensorModes.MOTION:
+      default:
+        this.sensorMode = SensorModes.MOTION;
+        this.sensorService = new this.api.hap.Service.MotionSensor();
+        break;
+    }
 
     this.batteryService = new this.api.hap.Service.Battery();
 
@@ -49,20 +60,37 @@ export class PrusaLinkAccessory {
       // do nothing -> standard values will be set
     }
 
-    this.updateMotionDetected(state);
+    this.log.debug(`${this.config.name} is ${state}`);
+
+    switch (this.sensorMode) {
+      case SensorModes.OCCUPANCY:
+        this.updateOccupancySensor(state);
+        break;
+      case SensorModes.MOTION:
+        this.updateMotionSensor(state);
+        break;
+    }
     this.updateBatteryLevel(completion);
   }
 
-  private updateMotionDetected(state: PrinterStates) {
+  private updateMotionSensor(state: PrinterStates) {
     let motion = false;
 
     if (state === PrinterStates.FINISHED) {
       motion = true;
     }
 
-    this.motionSensorService.updateCharacteristic(this.api.hap.Characteristic.MotionDetected, motion);
+    this.sensorService.updateCharacteristic(this.api.hap.Characteristic.MotionDetected, motion);
+  }
 
-    this.log.debug(`${this.config.name} is ${state}`);
+  private updateOccupancySensor(state: PrinterStates) {
+    let occupied = false;
+
+    if (state === PrinterStates.PRINTING) {
+      occupied = true;
+    }
+
+    this.sensorService.updateCharacteristic(this.api.hap.Characteristic.OccupancyDetected, occupied);
   }
 
   private updateBatteryLevel(completion: number) {
@@ -73,7 +101,7 @@ export class PrusaLinkAccessory {
 
   public getServices(): Service[] {
     return [
-      this.motionSensorService,
+      this.sensorService,
       this.batteryService,
       this.informationService,
     ];

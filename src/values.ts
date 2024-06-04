@@ -3,6 +3,11 @@ export class Paths {
   static readonly StatusPath = '/api/v1/status';
 }
 
+export enum SensorModes {
+  MOTION = 'motion',
+  OCCUPANCY = 'occupancy'
+}
+
 export enum PrinterStates {
   IDLE = 'IDLE',
   PRINTING = 'PRINTING',
