@@ -4,6 +4,7 @@
   "version": "2.0.2",
   "description": "An homebridge plugin for Prusa Link",
   "license": "Apache-2.0",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git://github.com/buster1407/homebridge-prusa-link.git"
@@ -12,8 +13,8 @@
     "url": "https://github.com/buster1407/homebridge-prusa-link/issues"
   },
   "engines": {
-    "node": ">=14.18.1",
-    "homebridge": ">=1.3.5"
+    "node": "^18.17.0 || ^20.9.0",
+    "homebridge": "^1.8.0"
   },
   "main": "dist/index.js",
   "scripts": {

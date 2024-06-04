@@ -1,10 +1,10 @@
 import { AccessoryConfig, API, Logger, Service } from 'homebridge';
 import httpClient, { RequestOptions } from 'urllib';
-import { Paths, PrinterStates } from './values';
+import { Paths, PrinterStates } from './values.js';
 
 export class PrusaLinkAccessory {
 
-  private readonly statusUrl = Paths.Http + this.config.ip + Paths.StatusPath;
+  private readonly statusUrl;
 
   private readonly motionSensorService: Service;
   private readonly informationService: Service;
@@ -14,6 +14,8 @@ export class PrusaLinkAccessory {
     private readonly log: Logger,
     private readonly config: AccessoryConfig,
     private readonly api: API) {
+
+    this.statusUrl = Paths.Http + this.config.ip + Paths.StatusPath;
 
     this.motionSensorService = new this.api.hap.Service.MotionSensor();
 
