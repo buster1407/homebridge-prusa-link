@@ -1,7 +1,7 @@
 import { API } from 'homebridge';
 
-import { PrusaLinkAccessory } from './prusaLinkAccessory';
+import { PrusaLinkAccessory } from './prusaLinkAccessory.js';
 
-export = (api: API) => {
+export default (api: API) => {
   api.registerAccessory('homebridge-prusa-link', 'PrusaLinkDevice', PrusaLinkAccessory);
 };
