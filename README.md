@@ -10,6 +10,7 @@ This [Homebridge](https://github.com/homebridge/homebridge) plugin allows you to
 
 ### Features
 * Motion sensor: Triggered when printer finishes.
+* Occupancy sensor: Active when printer is printing.
 * Battery state: Shows current print progress in percent.
 
 ![image](https://user-images.githubusercontent.com/52078523/183643597-d88ae5ba-5a06-4d70-9f89-fadc638ef1a7.png)
@@ -25,14 +26,15 @@ sudo npm install -g homebridge-prusa-link
 
 ## Configuration
 
-For each printer you want to monitor add a `PrusaLinkDevice` accessory in your homebridge configuration file `config.json`.
+For each printer you want to monitor, add a `PrusaLinkDevice` accessory in your homebridge configuration file `config.json`.
 
 Set the required configuration values as follows:
 * accessory: "PrusaLinkDevice"
 * name: How the printer should be named in your Home App
-* ip: The IP adress under which Prusa Link can be reached
-* user: The username used to connect to  Prusa Link
-* password: The password used to connect to  Prusa Link
+* ip: The IP address under which Prusa Link can be reached
+* user: The username used to connect to Prusa Link
+* password: The password used to connect to Prusa Link
+* sensorMode: The kind of sensor you want to expose ("motion" OR "occupancy")
 
 ### Example
 ```sh
@@ -42,6 +44,7 @@ Set the required configuration values as follows:
   "name": "Prusa Mini",
   "ip": "192.168.1.25",
   "user": "maker",
-  "password": "password123"
+  "password": "password123",
+  "sensorMode": "motion"
 }
 ```
